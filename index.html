@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101713">
+<title>Barracks-Web Games — Play. Compete. Repeat.</title>
+<meta name="description" content="Barracks-Web Games — a home for quick games, friendly competition, and high scores.">
+<style>
+:root{--bg:#0d120f;--panel:#151d18;--panel2:#1b261f;--line:#2a392f;--text:#edf5ef;--muted:#9aab9f;--green:#b7f36b;--green2:#8bc84b;--red:#ff786c;--gold:#f6cb69;--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#26392b 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.wrap{width:min(1120px,calc(100% - 36px));margin:auto}
+header{height:76px;border-bottom:1px solid #26332b;background:#0d120fdd;backdrop-filter:blur(14px);position:sticky;top:0;z-index:20}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:-.5px;font-size:18px}.brandmark{width:38px;height:38px;border-radius:12px;background:var(--green);color:#142014;display:grid;place-items:center;font-size:20px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px;font-weight:800;margin-top:-3px}
+nav{display:flex;gap:7px}nav button,.ghost{background:transparent;color:var(--muted);border:0;padding:10px 13px;border-radius:10px;font-weight:700}nav button:hover,nav button.active{background:#1b2920;color:var(--green)}
+.menu{display:none;background:var(--panel);border:1px solid var(--line);color:var(--text);padding:9px 12px;border-radius:10px}
+.hero{padding:68px 0 40px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:35px}.eyebrow{color:var(--green);font-size:11px;letter-spacing:2.5px;font-weight:900;text-transform:uppercase}.hero h1{font-size:clamp(42px,6vw,72px);line-height:.99;letter-spacing:-4px;margin:17px 0}.hero h1 span{color:var(--green)}.hero p{color:var(--muted);font-size:17px;max-width:520px}.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:25px}
+.primary,.secondary{border:0;border-radius:12px;padding:13px 18px;font-weight:850}.primary{background:var(--green);color:#172014}.primary:hover{background:#caff87;transform:translateY(-1px)}.secondary{background:#243229;color:var(--text);border:1px solid #344638}.secondary:hover{border-color:var(--green)}
+.hero-art{min-height:280px;border:1px solid #354739;border-radius:25px;background:linear-gradient(145deg,#253a2b,#141d17 70%);position:relative;overflow:hidden;display:grid;place-items:center}.hero-art:before,.hero-art:after{content:"";position:absolute;border:1px solid #607b5a44;border-radius:50%;width:340px;height:340px}.hero-art:after{width:240px;height:240px}.big-horse{font-size:130px;filter:drop-shadow(0 20px 12px #0008);z-index:1;transform:scaleX(-1)}.art-tag{position:absolute;z-index:2;background:#0d140fee;border:1px solid #40513e;border-radius:12px;padding:9px 12px;font-size:11px;font-weight:900;letter-spacing:1px}.tag-a{top:24px;left:22px;color:var(--green)}.tag-b{bottom:24px;right:22px;color:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:10px 0 50px}.stat{background:var(--panel);border:1px solid var(--line);padding:17px;border-radius:15px}.stat strong{font-size:25px;display:block}.stat span{font-size:12px;color:var(--muted)}
+section{scroll-margin-top:95px;padding:24px 0 50px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:20px}.section-head h2{font-size:28px;letter-spacing:-1px;margin:5px 0 0}.section-head p{color:var(--muted);margin:4px 0 0;font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.game-card{background:linear-gradient(145deg,#1b2820,#141b16);border:1px solid var(--line);border-radius:18px;padding:20px;min-height:190px;display:flex;flex-direction:column;align-items:flex-start;transition:.2s}.game-card:hover{transform:translateY(-3px);border-color:#607c53}.game-icon{width:47px;height:47px;border-radius:14px;background:#293b2b;display:grid;place-items:center;font-size:25px}.game-card h3{margin:14px 0 4px;font-size:18px}.game-card p{color:var(--muted);font-size:13px;margin:0 0 17px}.game-card button{margin-top:auto}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px}.race-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:17px}.race-top h3{margin:0;font-size:19px}.race-top p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.track{position:relative;overflow:hidden;border-radius:13px;border:1px solid #5e805d;background:#7c9f70}.crowd{height:31px;background:#a7cba5;display:flex;align-items:center;justify-content:space-around;overflow:hidden;font-size:19px}.lane{height:75px;position:relative;border-bottom:2px solid #d8e8d0;background:#75996b}.lane:last-child{border:0}.horse-runner{position:absolute;left:2%;top:16px;font-size:38px;z-index:3;transition:left .04s linear;filter:drop-shadow(1px 3px 2px #263b20)}.lane-name{position:absolute;top:3px;left:2%;background:#211b2a;color:#fff;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:900;z-index:4;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.finishline{position:absolute;right:9%;top:0;bottom:0;width:19px;z-index:2;background:conic-gradient(#fff 25%,#222 0 50%,#fff 0 75%,#222 0);background-size:20px 20px}.finishlabel{position:absolute;right:5%;top:0;z-index:5;background:var(--red);color:#fff;font-size:9px;font-weight:900;padding:3px 8px;border-radius:0 0 6px 6px}
+.race-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.field label{display:block;color:var(--muted);font-size:10px;font-weight:900;letter-spacing:1px;margin-bottom:5px}.field input,.name-input{width:100%;background:#0f1712;border:1px solid #344538;border-radius:9px;padding:10px;color:var(--text);outline:none}.field input:focus,.name-input:focus{border-color:var(--green)}.race-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.race-message{font-size:13px;color:var(--muted)}.race-message b{color:var(--green)}
+.gamebox{max-width:650px;margin:auto;text-align:center}.gamebox h3{font-size:23px;margin:0 0 5px}.gamebox p{color:var(--muted);font-size:13px;margin:0 0 20px}.reaction-pad{width:100%;min-height:170px;border-radius:15px;border:1px solid #3a4b3e;background:#1e2b22;color:var(--text);font-weight:900;font-size:20px}.reaction-pad.wait{background:#713c38}.reaction-pad.go{background:#b7f36b;color:#162012}.number-row{display:flex;gap:10px;justify-content:center;margin:15px auto;max-width:360px}.number-row input{text-align:center;max-width:160px;background:#0f1712;border:1px solid #344538;border-radius:10px;padding:11px;color:var(--text);font-size:18px}
+.leaderboard{width:100%;border-collapse:collapse;text-align:left}.leaderboard th{font-size:10px;color:var(--muted);letter-spacing:1px;padding:12px;border-bottom:1px solid var(--line)}.leaderboard td{padding:13px 12px;border-bottom:1px solid #26332b;font-size:13px}.leaderboard tr:last-child td{border:0}.rank{color:var(--green);font-weight:900}.empty{text-align:center;color:var(--muted);padding:28px!important}
+footer{border-top:1px solid var(--line);padding:27px 0;color:var(--muted);font-size:12px}.foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);opacity:0;background:var(--green);color:#172014;padding:11px 17px;border-radius:11px;font-weight:850;z-index:50;transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:43px}.hero-art{min-height:205px}.big-horse{font-size:100px}.cards{grid-template-columns:1fr}.race-controls{grid-template-columns:repeat(2,1fr)}nav{display:none;position:absolute;top:75px;left:0;right:0;padding:12px 18px;background:#101713;border-bottom:1px solid var(--line);flex-direction:column}nav.open{display:flex}nav button{text-align:left}.menu{display:block}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:21px}.section-head{align-items:start;flex-direction:column}.hero h1{letter-spacing:-2.5px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+ <div class="brand"><div class="brandmark">✦</div><div>BARRACKS-WEB GAMES<small>PLAY • COMPETE • REPEAT</small></div></div>
+ <nav id="nav"><button class="active" data-go="home">Home</button><button data-go="games">Games</button><button data-go="racing">Horse Racing</button><button data-go="leaderboard">Leaderboard</button></nav>
+ <button class="menu" id="menu">☰</button>
+</div></header>
+<main class="wrap">
+<section class="hero" id="home">
+ <div><div class="eyebrow">YOUR NEXT PLAYGROUND</div><h1>Ready to<br><span>make your</span><br>move?</h1><p>Welcome to Barracks-Web Games — quick challenges, friendly competition, and a place to climb the leaderboard.</p><div class="actions"><button class="primary" data-scroll="games">Explore games&nbsp; ↗</button><button class="secondary" data-scroll="racing">Start a race</button></div></div>
+ <div class="hero-art"><div class="art-tag tag-a">BARRACKS ARENA / 001</div><div class="big-horse">🏇</div><div class="art-tag tag-b">LET THE GAMES BEGIN</div></div>
+</section>
+<div class="stats"><div class="stat"><strong id="gameCount">03</strong><span>GAMES TO PLAY</span></div><div class="stat"><strong id="raceCount">0</strong><span>RACES COMPLETED ON THIS DEVICE</span></div><div class="stat"><strong id="playerCount">0</strong><span>PLAYERS ON THIS DEVICE</span></div></div>
+<section id="games"><div class="section-head"><div><div class="eyebrow">PICK YOUR CHALLENGE</div><h2>Game collection</h2><p>Choose a game and see what you can do.</p></div></div>
+ <div class="cards">
+  <article class="game-card"><div class="game-icon">🏇</div><h3>Horse Racing</h3><p>Name your horses, line them up, and see who reaches the finish first.</p><button class="secondary" data-scroll="racing">Play racing →</button></article>
+  <article class="game-card"><div class="game-icon">⚡</div><h3>Reaction Test</h3><p>Wait for green, then click as fast as you can. Can you beat your best time?</p><button class="secondary" data-scroll="reaction">Play reaction test →</button></article>
+  <article class="game-card"><div class="game-icon">🎯</div><h3>Number Guess</h3><p>Find the secret number from 1 to 100 in as few guesses as possible.</p><button class="secondary" data-scroll="guess">Play number guess →</button></article>
+ </div>
+</section>
+<section id="racing"><div class="section-head"><div><div class="eyebrow">BARRACKS ARENA</div><h2>Horse racing</h2><p>Customize the names and start the race.</p></div></div>
+ <div class="panel">
+  <div class="race-top"><div><h3>🏁 The starting line</h3><p>Four racers. One winner. All luck and speed.</p></div><div class="eyebrow" id="raceStatus">READY</div></div>
+  <div class="track"><div class="crowd">🙋🏻‍♂️ 🙋🏽 🙋🏻 🙋🏾 🙋🏼 🙋🏻‍♀️ 🙋🏽‍♂️ 🙋🏻 🙋🏾 🙋🏼 🙋🏻‍♂️</div><div class="finishlabel">FINISH</div><div class="finishline"></div><div id="lanes"></div></div>
+  <div class="race-controls" id="horseFields"></div>
+  <div class="race-bottom"><div class="race-message" id="raceMessage">Set your names and <b>start the race!</b></div><div><button class="secondary" id="resetRace">Reset</button> <button class="primary" id="startRace">Start race ↗</button></div></div>
+ </div>
+</section>
+<section id="reaction"><div class="section-head"><div><div class="eyebrow">TEST YOUR REFLEXES</div><h2>Reaction test</h2><p>Click when the screen turns green.</p></div></div>
+ <div class="panel gamebox"><h3>How quick are you?</h3><p id="reactionInfo">Press start, wait for green, then click the panel as fast as possible.</p><button class="reaction-pad" id="reactionPad">Start reaction test</button><div style="margin-top:13px;color:var(--muted);font-size:12px">Your best: <b id="reactionBest" style="color:var(--green)">—</b></div></div>
+</section>
+<section id="guess"><div class="section-head"><div><div class="eyebrow">USE YOUR INSTINCT</div><h2>Number guessing</h2><p>Can you find the secret number?</p></div></div>
+ <div class="panel gamebox"><h3>Guess the number</h3><p>I'm thinking of a number between 1 and 100.</p><div class="number-row"><input id="guessInput" type="number" min="1" max="100" placeholder="Your guess"><button class="primary" id="guessBtn">Guess</button></div><div id="guessInfo" class="race-message" aria-live="polite">You have unlimited attempts. Good luck!</div><button class="secondary" id="newNumber" style="margin-top:15px">New number ↻</button></div>
+</section>
+<section id="leaderboard"><div class="section-head"><div><div class="eyebrow">THE HALL OF FAME</div><h2>Leaderboard</h2><p>Top scores saved in this browser.</p></div><button class="secondary" id="clearBoard">Clear scores</button></div>
+ <div class="panel" style="padding:5px 14px"><table class="leaderboard"><thead><tr><th>RANK</th><th>PLAYER</th><th>ACHIEVEMENT</th><th>SCORE</th></tr></thead><tbody id="boardBody"><tr><td colspan="4" class="empty">No scores yet. Play a game to claim your place!</td></tr></tbody></table><p style="font-size:11px;color:var(--muted);padding:0 8px 9px">Scores are stored locally in this browser and are not shared between devices.</p></div>
+</section>
+</main>
+<footer><div class="wrap foot"><span>© <span id="year"></span> Barracks-Web Games. Built for fun.</span><span>PLAY FAIR • HAVE FUN • RUN IT BACK</span></div></footer>
+<div class="toast" id="toast"></div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id), KEY='barracks-games-v1';
+let data={scores:[],races:0};
+try{data={...data,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){};renderBoard();renderStats()};
+function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2200)}
+function addScore(name,achievement,score){data.scores.push({name:name.slice(0,18)||'Player',achievement,score:Number(score),time:Date.now()});data.scores.sort((a,b)=>b.score-a.score);data.scores=data.scores.slice(0,20);save()}
+function renderBoard(){const body=$('boardBody');body.innerHTML='';if(!data.scores.length){body.innerHTML='<tr><td colspan="4" class="empty">No scores yet. Play a game to claim your place!</td></tr>';return}data.scores.slice(0,10).forEach((s,i)=>{const tr=document.createElement('tr');[String(i+1).padStart(2,'0'),s.name,s.achievement,String(s.score)].forEach((v,j)=>{const td=document.createElement('td');td.textContent=v;if(j===0)td.className='rank';tr.appendChild(td)});body.appendChild(tr)})}
+function renderStats(){$('raceCount').textContent=data.races;$('playerCount').textContent=new Set(data.scores.map(s=>s.name.toLowerCase())).size}
+$('year').textContent=new Date().getFullYear();
+$('menu').onclick=()=>$('nav').classList.toggle('open');
+document.querySelectorAll('[data-go],[data-scroll]').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.go||b.dataset.scroll;document.getElementById(id).scrollIntoView({behavior:'smooth'});$('nav').classList.remove('open');document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.go===id))}));
+/* Horse racing */
+const defaults=['Alice','Bob','Charlie','Diana'], emojis=['🐎','🐴','🐎','🐴'], racers=[];
+defaults.forEach((n,i)=>{const field=document.createElement('div');field.className='field';field.innerHTML=`<label>LANE 0${i+1}</label><input maxlength="16" aria-label="Horse ${i+1} name">`;field.querySelector('input').value=n;$('horseFields').append(field);const lane=document.createElement('div');lane.className='lane';const label=document.createElement('span');label.className='lane-name';const horse=document.createElement('span');horse.className='horse-runner';horse.textContent=emojis[i];lane.append(label,horse);$('lanes').append(lane);racers.push({label,horse,x:2,speed:0,done:false})});
+function resetRace(){racers.forEach((r,i)=>{r.x=2;r.done=false;r.horse.style.left='2%';r.label.style.left='2%';r.label.textContent=$('horseFields').children[i].querySelector('input').value.trim()||defaults[i]});$('raceStatus').textContent='READY';$('raceMessage').innerHTML='Set your names and <b>start the race!</b>';$('startRace').disabled=false}
+$('resetRace').onclick=resetRace;
+let raceFrame=0,raceStart=0,racing=false;
+$('startRace').onclick=()=>{if(racing)return;racing=true;$('startRace').disabled=true;$('raceStatus').textContent='RACING';$('raceMessage').textContent='The horses are off!';racers.forEach(r=>{r.x=2;r.done=false;r.speed=2.1+Math.random()*3;r.horse.style.left='2%'});raceStart=performance.now();cancelAnimationFrame(raceFrame);function step(now){if(!racing)return;racers.forEach(r=>{if(r.done)return;r.x+=r.speed*(.65+Math.random()*.7);r.horse.style.left=Math.min(r.x,91)+'%';r.label.style.left=Math.min(r.x,91)+'%';if(r.x>=89)r.done=true});const winner=racers.find(r=>r.done);if(winner){racing=false;const time=((now-raceStart)/1000).toFixed(2);data.races++;const name=winner.label.textContent;addScore(name,'Horse race win',Math.max(1,Math.round(1000-Number(time)*30)));$('raceStatus').textContent='FINISHED';$('raceMessage').innerHTML=`🏆 <b>${escapeHTML(name)}</b> wins in ${time}s!`;toast(name+' wins the race!');$('startRace').disabled=false;return}raceFrame=requestAnimationFrame(step)}raceFrame=requestAnimationFrame(step)};
+function escapeHTML(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+/* Reaction test */
+let reactionState='idle',reactionTimer=0,goAt=0,best=Infinity;
+$('reactionPad').onclick=()=>{const pad=$('reactionPad');if(reactionState==='idle'||reactionState==='done'){reactionState='wait';pad.className='reaction-pad wait';pad.textContent='Wait for green…';$('reactionInfo').textContent='Stay ready. Don’t click too early!';reactionTimer=setTimeout(()=>{reactionState='go';goAt=performance.now();pad.className='reaction-pad go';pad.textContent='CLICK NOW!'},1200+Math.random()*2800)}else if(reactionState==='wait'){clearTimeout(reactionTimer);reactionState='done';pad.className='reaction-pad';pad.textContent='Too soon! Try again';$('reactionInfo').textContent='You clicked before green. Press the panel to retry.'}else if(reactionState==='go'){const ms=Math.round(performance.now()-goAt);reactionState='done';pad.className='reaction-pad';pad.textContent=ms+' ms — Play again';$('reactionInfo').textContent=ms<250?'Lightning fast!':ms<400?'Nice reaction!':'Good try — can you go faster?';if(ms<best){best=ms;$('reactionBest').textContent=ms+' ms'}addScore('Player','Reaction test',Math.max(1,1000-ms));toast('Reaction time: '+ms+' ms')}}; 
+/* Number guess */
+let secret=Math.floor(Math.random()*100)+1,tries=0;
+function newSecret() {secret=Math.floor(Math.random()*100)+1;tries=0;$('guessInfo').textContent='New number selected. Make your first guess!';$('guessInput').value=''}
+$('newNumber').onclick=newSecret;
+$('guessBtn').onclick=()=>{const n=Number($('guessInput').value);if(!Number.isInteger(n)||n<1||n>100){$('guessInfo').textContent='Enter a whole number from 1 to 100.';return}tries++;if(n===secret){$('guessInfo').textContent=`🎉 Correct! You got it in ${tries} guesses.`;addScore('Player','Number guess',Math.max(10,1100-tries*100));toast('You found the number!');newSecret()}else $('guessInfo').textContent=n<secret?'Too low — try higher!':'Too high — try lower!';$('guessInput').value='';$('guessInput').focus()};
+$('guessInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('guessBtn').click()});
+$('clearBoard').onclick=()=>{if(confirm('Clear all leaderboard scores saved in this browser?')){data.scores=[];data.races=0;save();toast('Local scores cleared')}};renderBoard();renderStats();resetRace();
+})();
+</script>
+</body></html>
